@@ -151,6 +151,7 @@ export class LatexService {
 
             // openout_any is set to paranoid ("p") to restrict LaTeX output file creation.
             // Note: openin_any is a no-op in TeX Live 2026+, so read isolation must be enforced at the container/sandbox/OS level in production.
+            openin_any: "p",
             openout_any: "p",
           },
         }
