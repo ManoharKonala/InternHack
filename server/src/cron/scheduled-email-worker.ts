@@ -59,7 +59,6 @@ async function drainScheduledEmails(): Promise<void> {
         await tx.scheduledEmail.update({
           where: { id: row.id },
           data: {
-            attempts: { increment: 1 },
             sendAt: visibilityTimeout,
           },
         });
@@ -111,6 +110,7 @@ async function drainScheduledEmails(): Promise<void> {
         await prisma.scheduledEmail.update({
           where: { id: row.id },
           data: {
+            attempts: { increment: 1 },
             lastError: msg.slice(0, 500),
             failedAt: isFailedMax ? failureTime : null,
             // If not failed max, back off retry time; otherwise leave in future
