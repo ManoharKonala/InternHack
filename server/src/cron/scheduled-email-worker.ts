@@ -116,7 +116,7 @@ async function drainScheduledEmails(): Promise<void> {
             // If not failed max, back off retry time; otherwise leave in future
             sendAt: isFailedMax
               ? row.sendAt
-              : new Date(failureTime.getTime() + nextAttempts * 5 * 60 * 1000), // exponential backoff
+              : new Date(failureTime.getTime() + nextAttempts * 5 * 60 * 1000), // linear backoff
           },
         });
       } catch (dbErr) {
