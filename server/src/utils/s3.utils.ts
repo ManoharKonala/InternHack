@@ -49,7 +49,7 @@ async function getSignedS3Url(key: string, expiresIn = 3600): Promise<string> {
   const command = new GetObjectCommand({ Bucket: BUCKET, Key: key });
   // s3Client is cast to any due to a known TypeScript type mismatch/compatibility issue between @aws-sdk/client-s3 and @aws-sdk/s3-request-presigner.
   // See: https://github.com/aws/aws-sdk-js-v3/issues/4312
-  return getSignedUrl(s3Client as any, command, { expiresIn });
+  return getSignedUrl(s3Client, command, { expiresIn });
 }
 
 export async function deleteFromS3(key: string): Promise<void> {
@@ -129,7 +129,7 @@ export const generatePresignedUploadUrl = async (fileKey: string, fileType: stri
   // Use createPresignedPost to enforce strict file size limits (Denial of Wallet prevention)
   // s3Client is cast to any due to a known TypeScript type mismatch/compatibility issue between @aws-sdk/client-s3 and @aws-sdk/s3-presigned-post.
   // See: https://github.com/aws/aws-sdk-js-v3/issues/4312
-  const { url, fields } = await createPresignedPost(s3Client as any, {
+  const { url, fields } = await createPresignedPost(s3Client, {
     Bucket: BUCKET,
     Key: fileKey,
     Conditions: [
