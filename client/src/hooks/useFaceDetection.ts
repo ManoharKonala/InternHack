@@ -38,13 +38,16 @@ export function useFaceDetection(config: FaceDetectionConfig) {
 
   // Stable refs for callbacks
   const onViolationRef = useRef(onViolation);
-  onViolationRef.current = onViolation;
   const onSnapshotRef = useRef(onSnapshot);
-  onSnapshotRef.current = onSnapshot;
   const onReadyRef = useRef(onReady);
-  onReadyRef.current = onReady;
   const onErrorRef = useRef(onError);
-  onErrorRef.current = onError;
+
+  useLayoutEffect(() => {
+    onViolationRef.current = onViolation;
+    onSnapshotRef.current = onSnapshot;
+    onReadyRef.current = onReady;
+    onErrorRef.current = onError;
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);

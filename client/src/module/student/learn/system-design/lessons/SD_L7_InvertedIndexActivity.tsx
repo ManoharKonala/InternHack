@@ -141,9 +141,9 @@ function buildIndex(): Record<string, number[]> {
 
 function LiveIndex() {
   const [query, setQuery] = useState("python web");
-  const index = useMemo(buildIndex, []);
-  const queryTerms = tokenize(query);
-  const matches = queryTerms.length === 0 ? [] : queryTerms.map((t) => ({ term: t, docs: index[t] ?? [] }));
+  const index = useMemo(() => buildIndex(), []);
+  const queryTerms = useMemo(() => tokenize(query), [query]);
+  const matches = useMemo(() => queryTerms.length === 0 ? [] : queryTerms.map((t) => ({ term: t, docs: index[t] ?? [] })), [queryTerms, index]);
   const intersection = useMemo(() => {
     if (matches.length === 0) return [];
     let result = new Set(matches[0].docs);

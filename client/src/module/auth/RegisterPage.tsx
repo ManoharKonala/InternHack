@@ -412,6 +412,7 @@ export default function RegisterPage() {
             <form noValidate onSubmit={handleSubmit} className="space-y-4">
               <FormField label="Full name" error={fieldErrors.name} fieldName="name">
                 <input
+                  id="name"
                   type="text"
                   value={form.name}
                   onChange={(e) => handleFieldChange("name", e.target.value)}
@@ -428,6 +429,7 @@ export default function RegisterPage() {
 
               <FormField label={isRecruiter ? "Company email" : "Email"} error={fieldErrors.email} fieldName="email">
                 <input
+                  id="email"
                   type="email"
                   value={form.email}
                   onChange={(e) => handleFieldChange("email", e.target.value)}
@@ -450,6 +452,7 @@ export default function RegisterPage() {
               {isRecruiter && (
                 <FormField label="Company" fieldName="company">
                   <input
+                    id="company"
                     type="text"
                     value={form.company}
                     onChange={(e) => setForm({ ...form, company: e.target.value })}
@@ -462,6 +465,7 @@ export default function RegisterPage() {
               <FormField label="Password" error={fieldErrors.password} fieldName="password">
                 <div className="relative">
                   <input
+                    id="password"
                     type={showPassword ? "text" : "password"}
                     value={form.password}
                     onChange={(e) => handleFieldChange("password", e.target.value)}
@@ -495,6 +499,7 @@ export default function RegisterPage() {
 
               <FormField label="Confirm Password" error={fieldErrors.confirmPassword} fieldName="confirmPassword">
                 <input
+                  id="confirmPassword"
                   type={showPassword ? "text" : "password"}
                   value={form.confirmPassword}
                   onChange={(e) => handleFieldChange("confirmPassword", e.target.value)}
@@ -556,7 +561,7 @@ function FormField({
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-xs font-mono uppercase tracking-widest text-stone-500">
+        <label htmlFor={fieldName} className="text-xs font-mono uppercase tracking-widest text-stone-500">
           {label}
         </label>
         {right}

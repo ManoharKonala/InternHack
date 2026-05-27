@@ -1,0 +1,207 @@
+﻿
+C:\Users\konal\Downloads\InternHack\client\src\hooks\useFaceDetection.ts
+  41:3  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\hooks\useFaceDetection.ts:41:3
+  39 |   // Stable refs for callbacks
+  40 |   const onViolationRef = useRef(onViolation);
+> 41 |   onViolationRef.current = onViolation;
+     |   ^^^^^^^^^^^^^^^^^^^^^^ Cannot update ref during render
+  42 |   const onSnapshotRef = useRef(onSnapshot);
+  43 |   onSnapshotRef.current = onSnapshot;
+  44 |   const onReadyRef = useRef(onReady);  react-hooks/refs
+  43:3  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\hooks\useFaceDetection.ts:43:3
+  41 |   onViolationRef.current = onViolation;
+  42 |   const onSnapshotRef = useRef(onSnapshot);
+> 43 |   onSnapshotRef.current = onSnapshot;
+     |   ^^^^^^^^^^^^^^^^^^^^^ Cannot update ref during render
+  44 |   const onReadyRef = useRef(onReady);
+  45 |   onReadyRef.current = onReady;
+  46 |   const onErrorRef = useRef(onError);          react-hooks/refs
+  45:3  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\hooks\useFaceDetection.ts:45:3
+  43 |   onSnapshotRef.current = onSnapshot;
+  44 |   const onReadyRef = useRef(onReady);
+> 45 |   onReadyRef.current = onReady;
+     |   ^^^^^^^^^^^^^^^^^^ Cannot update ref during render
+  46 |   const onErrorRef = useRef(onError);
+  47 |   onErrorRef.current = onError;
+  48 |                                                                 react-hooks/refs
+  47:3  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\hooks\useFaceDetection.ts:47:3
+  45 |   onReadyRef.current = onReady;
+  46 |   const onErrorRef = useRef(onError);
+> 47 |   onErrorRef.current = onError;
+     |   ^^^^^^^^^^^^^^^^^^ Cannot update ref during render
+  48 |
+  49 |   const [isLoading, setIsLoading] = useState(false);
+  50 |   const [isActive, setIsActive] = useState(false);                                     react-hooks/refs
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\ats\LatexResumeEditor.tsx
+  407:23  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\ats\LatexResumeEditor.tsx:407:23
+  405 |             type="button"
+  406 |             onClick={handleUndo}
+> 407 |             disabled={historyPosRef.current <= 0}
+      |                       ^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  408 |             className={ghostBtnCls}
+  409 |             title="Undo"
+  410 |           >                                                           react-hooks/refs
+  417:23  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\ats\LatexResumeEditor.tsx:417:23
+  415 |             type="button"
+  416 |             onClick={handleRedo}
+> 417 |             disabled={historyPosRef.current >= historyRef.current.length - 1}
+      |                       ^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  418 |             className={ghostBtnCls}
+  419 |             title="Redo"
+  420 |           >                               react-hooks/refs
+  417:48  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\ats\LatexResumeEditor.tsx:417:48
+  415 |             type="button"
+  416 |             onClick={handleRedo}
+> 417 |             disabled={historyPosRef.current >= historyRef.current.length - 1}
+      |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  418 |             className={ghostBtnCls}
+  419 |             title="Redo"
+  420 |           >  react-hooks/refs
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L7_InvertedIndexActivity.tsx
+  144:25  error  Error: Expected the first argument to be an inline function expression
+
+Expected the first argument to be an inline function expression.
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L7_InvertedIndexActivity.tsx:144:25
+  142 | function LiveIndex() {
+  143 |   const [query, setQuery] = useState("python web");
+> 144 |   const index = useMemo(buildIndex, []);
+      |                         ^^^^^^^^^^ Expected the first argument to be an inline function expression
+  145 |   const queryTerms = tokenize(query);
+  146 |   const matches = queryTerms.length === 0 ? [] : queryTerms.map((t) => ({ term: t, docs: index[t] ?? [] }));
+  147 |   const intersection = useMemo(() => {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react-hooks/use-memo
+  147:24  error  Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. This value was memoized in source but not in compilation output.
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L7_InvertedIndexActivity.tsx:147:24
+  145 |   const queryTerms = tokenize(query);
+  146 |   const matches = queryTerms.length === 0 ? [] : queryTerms.map((t) => ({ term: t, docs: index[t] ?? [] }));
+> 147 |   const intersection = useMemo(() => {
+      |                        ^^^^^^^^^^^^^^^
+> 148 |     if (matches.length === 0) return [];
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 149 |     let result = new Set(matches[0].docs);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 150 |     for (let i = 1; i < matches.length; i++) {
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 151 |       result = new Set([...result].filter((id) => matches[i].docs.includes(id)));
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 152 |     }
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 153 |     return Array.from(result).sort((a, b) => a - b);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 154 |   }, [matches]);
+      | ^^^^^^^^^^^^^^^^ Could not preserve existing memoization
+  155 |
+  156 |   return (
+  157 |     <div>  react-hooks/preserve-manual-memoization
+  154:7   error  Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. This dependency may be mutated later, which could cause the value to change unexpectedly.
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L7_InvertedIndexActivity.tsx:154:7
+  152 |     }
+  153 |     return Array.from(result).sort((a, b) => a - b);
+> 154 |   }, [matches]);
+      |       ^^^^^^^ This dependency may be modified later
+  155 |
+  156 |   return (
+  157 |     <div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/preserve-manual-memoization
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L8_RateLimiterActivity.tsx
+  117:83   error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L8_RateLimiterActivity.tsx:117:83
+  115 | function DistributedDemo() {
+  116 |   const [mode, setMode] = useState<Mode>("per-instance");
+> 117 |   const [servers, setServers] = useState<Server[]>([{ id: 1, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 2, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 3, counter: 0, resetAt: Date.now() + WINDOW_MS }]);
+      |                                                                                   ^^^^^^^^^^ Cannot call impure function
+  118 |   const [redisCounter, setRedisCounter] = useState(0);
+  119 |   const [redisResetAt, setRedisResetAt] = useState(Date.now() + WINDOW_MS);
+  120 |   const [running, setRunning] = useState(false);                                                                                                                   react-hooks/purity
+  117:139  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L8_RateLimiterActivity.tsx:117:139
+  115 | function DistributedDemo() {
+  116 |   const [mode, setMode] = useState<Mode>("per-instance");
+> 117 |   const [servers, setServers] = useState<Server[]>([{ id: 1, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 2, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 3, counter: 0, resetAt: Date.now() + WINDOW_MS }]);
+      |                                                                                                                                           ^^^^^^^^^^ Cannot call impure function
+  118 |   const [redisCounter, setRedisCounter] = useState(0);
+  119 |   const [redisResetAt, setRedisResetAt] = useState(Date.now() + WINDOW_MS);
+  120 |   const [running, setRunning] = useState(false);                                                          react-hooks/purity
+  117:195  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L8_RateLimiterActivity.tsx:117:195
+  115 | function DistributedDemo() {
+  116 |   const [mode, setMode] = useState<Mode>("per-instance");
+> 117 |   const [servers, setServers] = useState<Server[]>([{ id: 1, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 2, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 3, counter: 0, resetAt: Date.now() + WINDOW_MS }]);
+      |                                                                                                                                                                                                   ^^^^^^^^^^ Cannot call impure function
+  118 |   const [redisCounter, setRedisCounter] = useState(0);
+  119 |   const [redisResetAt, setRedisResetAt] = useState(Date.now() + WINDOW_MS);
+  120 |   const [running, setRunning] = useState(false);  react-hooks/purity
+  119:52   error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\learn\system-design\lessons\SD_L8_RateLimiterActivity.tsx:119:52
+  117 |   const [servers, setServers] = useState<Server[]>([{ id: 1, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 2, counter: 0, resetAt: Date.now() + WINDOW_MS }, { id: 3, counter: 0, resetAt: Date.now() + WINDOW_MS }]);
+  118 |   const [redisCounter, setRedisCounter] = useState(0);
+> 119 |   const [redisResetAt, setRedisResetAt] = useState(Date.now() + WINDOW_MS);
+      |                                                    ^^^^^^^^^^ Cannot call impure function
+  120 |   const [running, setRunning] = useState(false);
+  121 |   const [stats, setStats] = useState({ totalRequests: 0, allowed: 0, blocked: 0 });
+  122 |                                                                                                                                                     react-hooks/purity
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\skill-verification\SkillTestPage.tsx
+  222:5  error  Error: This value cannot be modified
+
+Modifying a value previously passed as an argument to a hook is not allowed. Consider moving the modification before calling the hook.
+
+C:\Users\konal\Downloads\InternHack\client\src\module\student\skill-verification\SkillTestPage.tsx:222:5
+  220 |   const terminateRef = useRef<() => void>(undefined);
+  221 |   useLayoutEffect(() => {
+> 222 |     terminateRef.current = () => handleSubmit();
+      |     ^^^^^^^^^^^^ `terminateRef` cannot be modified
+  223 |   }, [handleSubmit]);
+  224 |
+  225 |   const selectAnswer = useCallback((questionId: number, optIdx: number) => {  react-hooks/immutability
+
+Γ£û 15 problems (15 errors, 0 warnings)
+

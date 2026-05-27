@@ -176,6 +176,8 @@ export function useStudentSidebar() {
             <button
               onClick={toggleSidebar}
               title="Collapse sidebar"
+              aria-label="Collapse sidebar"
+              aria-expanded={!collapsed}
               className="hidden lg:flex shrink-0 p-1.5 rounded-md text-stone-500 hover:text-stone-900 dark:hover:text-stone-50 hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors border-0 bg-transparent cursor-pointer"
             >
               <ChevronsLeft className="w-4 h-4" />
@@ -188,6 +190,8 @@ export function useStudentSidebar() {
             <button
               onClick={toggleSidebar}
               title="Expand sidebar"
+              aria-label="Expand sidebar"
+              aria-expanded={!collapsed}
               className="p-1.5 rounded-md text-stone-500 hover:text-stone-900 dark:hover:text-stone-50 hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors border-0 bg-transparent cursor-pointer"
             >
               <ChevronsRight className="w-4 h-4" />

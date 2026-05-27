@@ -158,6 +158,13 @@ export default function LatexResumeEditor() {
   const historyRef = useRef<string[]>([code]);
   const historyPosRef = useRef(0);
   const skipHistoryRef = useRef(false);
+  const [canUndo, setCanUndo] = useState(false);
+  const [canRedo, setCanRedo] = useState(false);
+
+  const updateUndoRedoState = useCallback(() => {
+    setCanUndo(historyPosRef.current > 0);
+    setCanRedo(historyPosRef.current < historyRef.current.length - 1);
+  }, []);
 
   const pushHistory = useCallback((val: string) => {
     if (skipHistoryRef.current) return;
@@ -167,7 +174,8 @@ export default function LatexResumeEditor() {
     historyRef.current.push(val);
     if (historyRef.current.length > 50) historyRef.current.shift();
     historyPosRef.current = historyRef.current.length - 1;
-  }, []);
+    updateUndoRedoState();
+  }, [updateUndoRedoState]);
 
   const handleCodeChange = useCallback((val: string) => {
     setCode(val);
@@ -180,7 +188,8 @@ export default function LatexResumeEditor() {
     skipHistoryRef.current = true;
     setCode(historyRef.current[historyPosRef.current]);
     skipHistoryRef.current = false;
-  }, [setCode]);
+    updateUndoRedoState();
+  }, [setCode, updateUndoRedoState]);
 
   const handleRedo = useCallback(() => {
     if (historyPosRef.current >= historyRef.current.length - 1) return;
@@ -188,7 +197,8 @@ export default function LatexResumeEditor() {
     skipHistoryRef.current = true;
     setCode(historyRef.current[historyPosRef.current]);
     skipHistoryRef.current = false;
-  }, [setCode]);
+    updateUndoRedoState();
+  }, [setCode, updateUndoRedoState]);
 
   const handleApplyCode = useCallback((newCode: string) => {
     setCode(newCode);
@@ -404,7 +414,7 @@ export default function LatexResumeEditor() {
           <button
             type="button"
             onClick={handleUndo}
-            disabled={historyPosRef.current <= 0}
+            disabled={!canUndo}
             className={ghostBtnCls}
             title="Undo"
           >
@@ -414,7 +424,7 @@ export default function LatexResumeEditor() {
           <button
             type="button"
             onClick={handleRedo}
-            disabled={historyPosRef.current >= historyRef.current.length - 1}
+            disabled={!canRedo}
             className={ghostBtnCls}
             title="Redo"
           >

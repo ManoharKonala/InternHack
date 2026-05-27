@@ -82,6 +82,7 @@ export function Footer() {
             ) : (
               <form onSubmit={handleSubscribe} className="mt-6 flex flex-col sm:flex-row gap-2 max-w-md">
                 <input
+                  aria-label="Email address for newsletter"
                   type="email"
                   value={email}
                   onChange={(e) => {

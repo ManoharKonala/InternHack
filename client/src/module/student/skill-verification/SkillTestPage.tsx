@@ -121,11 +121,13 @@ export default function SkillTestPage() {
     };
   }, [started, result]);
 
-  /* ---- Proctoring hook ------------------------------------------- */
+  // Wire terminate callback
+  const terminateRef = useRef<() => void>(undefined);
   const handleTerminate = useCallback(() => {
     terminateRef.current?.();
   }, []);
 
+  /* ---- Proctoring hook ------------------------------------------- */
   const proctor = useProctoring({
     enabled: started && !result,
     onTerminate: handleTerminate,
@@ -134,14 +136,20 @@ export default function SkillTestPage() {
   /* Fetch test detail ----------------------------------------------- */
   useEffect(() => {
     if (!testId) return;
-    setLoading(true);
-    api
-      .get(`/skill-tests/${testId}`)
-      .then((res) => setTest(res.data))
-      .catch((err) => {
-        setError(err?.response?.data?.error ?? "Test not found.");
-      })
-      .finally(() => setLoading(false));
+    let active = true;
+    const loadTest = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get(`/skill-tests/${testId}`);
+        if (active) setTest(res.data);
+      } catch (err: any) {
+        if (active) setError(err?.response?.data?.error ?? "Test not found.");
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+    loadTest();
+    return () => { active = false; };
   }, [testId]);
 
   /* Start test ------------------------------------------------------ */
@@ -168,51 +176,48 @@ export default function SkillTestPage() {
   }, [testId, proctor]);
 
   /* Submit ---------------------------------------------------------- */
-  const handleSubmit = useCallback(
-    async () => {
-      if (!test || submittingRef.current) return;
-      submittingRef.current = true;
-      setSubmitting(true);
+  const handleSubmit = async () => {
+    if (!test || submittingRef.current) return;
+    submittingRef.current = true;
+    setSubmitting(true);
 
-      try {
-        const answersPayload = Object.entries(answers).map(([qId, idx]) => ({
-          questionId: Number(qId),
-          selectedIndex: idx,
-        }));
+    try {
+      const answersPayload = Object.entries(answers).map(([qId, idx]) => ({
+        questionId: Number(qId),
+        selectedIndex: idx,
+      }));
 
-        const res = await api.post(`/skill-tests/${test.id}/submit`, {
-          answers: answersPayload,
-          proctorLog: proctor.getProctorLog(),
-        });
-        setResult(res.data);
+      const res = await api.post(`/skill-tests/${test.id}/submit`, {
+        answers: answersPayload,
+        proctorLog: proctor.getProctorLog(),
+      });
+      setResult(res.data);
 
-        if (res.data.passed) {
-          toast.success(
-            "Congratulations! You passed and your skill is now verified!",
-          );
-        } else {
-          toast.error(
-            `Score: ${res.data.score}% - you need ${test.passThreshold}% to pass.`,
-          );
-        }
-
-        if (document.fullscreenElement) {
-          document.exitFullscreen().catch(() => { });
-        }
-      } catch (err: unknown) {
-        const e = err as { response?: { data?: { error?: string } } };
-        toast.error(e?.response?.data?.error ?? "Failed to submit test");
-      } finally {
-        submittingRef.current = false;
-        setSubmitting(false);
+      if (res.data.passed) {
+        toast.success(
+          "Congratulations! You passed and your skill is now verified!",
+        );
+      } else {
+        toast.error(
+          `Score: ${res.data.score}% - you need ${test.passThreshold}% to pass.`,
+        );
       }
-    },
-    [test, answers, proctor],
-  );
 
-  // Wire terminate callback
-  const terminateRef = useRef<() => void>(undefined);
-  terminateRef.current = () => handleSubmit();
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => { });
+      }
+    } catch (err: unknown) {
+      const e = err as { response?: { data?: { error?: string } } };
+      toast.error(e?.response?.data?.error ?? "Failed to submit test");
+    } finally {
+      submittingRef.current = false;
+      setSubmitting(false);
+    }
+  };
+
+  useLayoutEffect(() => {
+    terminateRef.current = handleSubmit;
+  });
 
   const selectAnswer = useCallback((questionId: number, optIdx: number) => {
     if (result) return;

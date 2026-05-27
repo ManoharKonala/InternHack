@@ -66,6 +66,7 @@ export function DynamicFieldBuilder({ fields, onChange }: DynamicFieldBuilderPro
                 type="button"
                 onClick={(e) => { e.stopPropagation(); moveField(index, "up"); }}
                 disabled={index === 0}
+                aria-label="Move field up"
                 className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 disabled:opacity-30"
               >
                 <GripVertical className="w-4 h-4" />
@@ -85,6 +86,7 @@ export function DynamicFieldBuilder({ fields, onChange }: DynamicFieldBuilderPro
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); removeField(field.id); }}
+              aria-label="Remove field"
               className="p-1 text-red-400 hover:text-red-600 transition-colors"
             >
               <Trash2 className="w-4 h-4" />
@@ -95,8 +97,9 @@ export function DynamicFieldBuilder({ fields, onChange }: DynamicFieldBuilderPro
             <div className="p-4 space-y-3 border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Label</label>
+                  <label htmlFor={`field-label-${field.id}`} className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Label</label>
                   <input
+                    id={`field-label-${field.id}`}
                     type="text"
                     value={field.label}
                     onChange={(e) => updateField(field.id, { label: e.target.value })}
@@ -105,8 +108,9 @@ export function DynamicFieldBuilder({ fields, onChange }: DynamicFieldBuilderPro
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Type</label>
+                  <label htmlFor={`field-type-${field.id}`} className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Type</label>
                   <select
+                    id={`field-type-${field.id}`}
                     value={field.fieldType}
                     onChange={(e) => updateField(field.id, { fieldType: e.target.value as FieldType })}
                     className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 dark:bg-gray-800 dark:text-white"
@@ -121,8 +125,9 @@ export function DynamicFieldBuilder({ fields, onChange }: DynamicFieldBuilderPro
               {/* Placeholder, only for types that accept text input */}
               {!["FILE_UPLOAD", "BOOLEAN", "DATE"].includes(field.fieldType) && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Placeholder</label>
+                  <label htmlFor={`field-placeholder-${field.id}`} className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Placeholder</label>
                   <input
+                    id={`field-placeholder-${field.id}`}
                     type="text"
                     value={field.placeholder || ""}
                     onChange={(e) => updateField(field.id, { placeholder: e.target.value })}
@@ -265,6 +270,7 @@ function OptionsEditor({ options, onChange }: { options: string[]; onChange: (op
           <input
             type="text"
             value={opt}
+            aria-label={`Option ${index + 1}`}
             onChange={(e) => updateOption(index, e.target.value)}
             className="flex-1 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 dark:bg-gray-800 dark:text-white"
             placeholder={`Option ${index + 1}`}
@@ -272,6 +278,7 @@ function OptionsEditor({ options, onChange }: { options: string[]; onChange: (op
           <button
             type="button"
             onClick={() => removeOption(index)}
+            aria-label="Remove option"
             className="p-1 text-red-400 hover:text-red-600"
           >
             <Trash2 className="w-3 h-3" />

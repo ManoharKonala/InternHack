@@ -112,14 +112,15 @@ function ExerciseSection({
 
   const exercise = exercises[activeIdx];
 
-  useEffect(() => {
-    if (!exercise) return;
-    setCode(exercise.starterCode);
+  const [prevExerciseId, setPrevExerciseId] = useState(exercise?.id);
+  if (exercise?.id !== prevExerciseId) {
+    setPrevExerciseId(exercise?.id);
+    setCode(exercise?.starterCode || "");
     setResult(null);
     setIsCorrect(null);
     setShowHints(0);
     setShowSolution(false);
-  }, [activeIdx, exercise?.id]);
+  }
 
   const handleRun = useCallback(async () => {
     if (!exercise || running) return;

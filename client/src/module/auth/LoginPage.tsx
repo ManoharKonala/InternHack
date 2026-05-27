@@ -164,8 +164,9 @@ export default function LoginPage() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <FormField label={isRecruiter ? "Company email" : "Email"}>
+                <FormField label={isRecruiter ? "Company email" : "Email"} htmlFor="email">
                   <input
+                    id="email"
                     type="email"
                     aria-label={isRecruiter ? "Company email" : "Email"}
                     value={form.email}
@@ -178,6 +179,7 @@ export default function LoginPage() {
 
                 <FormField
                   label="Password"
+                  htmlFor="password"
                   right={
                     <Link
                       to="/forgot-password"
@@ -189,6 +191,7 @@ export default function LoginPage() {
                 >
                   <div className="relative">
                     <input
+                      id="password"
                       type={showPassword ? "text" : "password"}
                       aria-label="Password"
                       value={form.password}
@@ -242,16 +245,18 @@ export default function LoginPage() {
 function FormField({
   label,
   right,
+  htmlFor,
   children,
 }: {
   label: string;
   right?: React.ReactNode;
+  htmlFor?: string;
   children: React.ReactNode;
 }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-xs font-mono uppercase tracking-widest text-stone-500">
+        <label htmlFor={htmlFor} className="text-xs font-mono uppercase tracking-widest text-stone-500">
           {label}
         </label>
         {right}

@@ -72,7 +72,7 @@ export function Navbar({ sidebarOffset = 0 }: { sidebarOffset?: number }) {
             <div className="relative">
               <img
                 src="/logo.png"
-                alt="InternHack"
+                alt="InternHack Logo"
                 className="h-8 w-8 rounded-md object-contain"
               />
               <span className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 bg-lime-400" />
@@ -89,26 +89,26 @@ export function Navbar({ sidebarOffset = 0 }: { sidebarOffset?: number }) {
                   ? location.pathname === "/"
                   : location.pathname.startsWith(item.href + "/") || location.pathname === item.href;
               return (
-                <Link key={item.href} to={item.href} aria-current={active ? "page" : undefined} className="no-underline">
-                  <button
-                    className={cn(
-                      "group relative px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-300 bg-transparent border-0 cursor-pointer",
-                      active
-                        ? "text-stone-900 dark:text-stone-50"
-                        : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-50",
-                    )}
-                  >
-                    {item.label}
-                    <span
+                  <Link key={item.href} to={item.href} aria-current={active ? "page" : undefined} className="no-underline">
+                    <button
                       className={cn(
-                        "absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-[2px] rounded-full bg-lime-400 transition-all duration-300 ease-out origin-center",
+                        "group relative px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-300 bg-transparent border-0 cursor-pointer",
                         active
-                          ? "w-full scale-x-100 opacity-100"
-                          : "w-full scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100",
+                          ? "text-stone-900 dark:text-stone-50"
+                          : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-50",
                       )}
-                    />
-                  </button>
-                </Link>
+                    >
+                      {item.label}
+                      <span
+                        className={cn(
+                          "absolute left-1/2 -translate-x-1/2 -bottom-0.5 h-[2px] rounded-full bg-lime-400 transition-all duration-300 ease-out origin-center",
+                          active
+                            ? "w-full scale-x-100 opacity-100"
+                            : "w-full scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100",
+                        )}
+                      />
+                    </button>
+                  </Link>
               );
             })}
           </div>
@@ -318,15 +318,22 @@ export function Navbar({ sidebarOffset = 0 }: { sidebarOffset?: number }) {
               className="overflow-hidden lg:hidden"
             >
                 <div role="menu" aria-label="Mobile navigation" className="pt-2 pb-4 space-y-1 border-t border-stone-200 dark:border-white/10">
-                {NAV_ITEMS.map((item) => (
-                  <MobileNavLink
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </MobileNavLink>
-                ))}
+                {NAV_ITEMS.map((item) => {
+                  const active =
+                    item.href === "/"
+                      ? location.pathname === "/"
+                      : location.pathname.startsWith(item.href + "/") || location.pathname === item.href;
+                  return (
+                    <MobileNavLink
+                      key={item.href}
+                      href={item.href}
+                      active={active}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </MobileNavLink>
+                  );
+                })}
                 <div className="pt-3 space-y-2">
                   {isAuthenticated ? (
                     <>
@@ -381,16 +388,24 @@ function MobileNavLink({
   href,
   children,
   onClick,
+  active,
 }: {
   href: string;
   children: React.ReactNode;
   onClick?: () => void;
+  active?: boolean;
 }) {
   return (
     <Link
       to={href}
       onClick={onClick}
-      className="block px-3 py-2 text-sm text-stone-700 hover:text-stone-900 hover:bg-stone-100 dark:text-stone-300 dark:hover:text-stone-50 dark:hover:bg-white/5 rounded-md transition-all font-medium no-underline"
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "block px-3 py-2 text-sm rounded-md transition-all font-medium no-underline",
+        active
+          ? "bg-stone-100 dark:bg-white/5 text-stone-900 dark:text-stone-50"
+          : "text-stone-700 hover:text-stone-900 hover:bg-stone-100 dark:text-stone-300 dark:hover:text-stone-50 dark:hover:bg-white/5"
+      )}
     >
       {children}
     </Link>
