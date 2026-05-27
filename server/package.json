@@ -38,7 +38,6 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",
-    "file-type": "^16.5.4",
     "google-auth-library": "^10.6.2",
     "groq-sdk": "^1.2.0",
     "helmet": "^8.2.0",
@@ -55,7 +54,6 @@
     "pg": "^8.21.0",
     "prisma": "^7.8.0",
     "resend": "^6.12.3",
-    "xlsx": "^0.18.5",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -78,5 +76,8 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.59.4",
     "vitest": "^4.1.7"
+  },
+  "overrides": {
+    "@hono/node-server": "^1.19.13"
   }
 }
