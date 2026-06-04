@@ -3,6 +3,7 @@ import { BadgeCheck, Plus, Pencil, Trash2, ChevronDown, ChevronRight, Save, X, L
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import api from "../../../lib/axios";
 import { SEO } from "../../../components/SEO";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import toast from "@/components/ui/toast";
 
 interface SkillTestQuestion {
@@ -47,6 +48,7 @@ export default function AdminSkillTestsPage() {
   const [saving, setSaving] = useState(false);
   const [expandedQ, setExpandedQ] = useState<number | null>(null);
   const [search, setSearch] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState<{ id: number; title: string } | null>(null);
 
   const fetchTests = useCallback(() => {
     setLoading(true);
@@ -73,14 +75,19 @@ export default function AdminSkillTestsPage() {
     setExpandedQ(null);
   };
 
-  const handleDelete = async (id: number, title: string) => {
-    if (!confirm(`Delete "${title}"? All questions and student attempts will be removed.`)) return;
+  const handleDelete = (id: number, title: string) => {
+    setConfirmDelete({ id, title });
+  };
+
+  const confirmDeleteAction = async () => {
+    if (!confirmDelete) return;
     try {
-      await api.delete(`/admin/skill-tests/${id}`);
-      setTests((prev) => prev.filter((t) => t.id !== id));
-      if (editing?.id === id) { setEditing(null); setCreating(false); }
+      await api.delete(`/admin/skill-tests/${confirmDelete.id}`);
+      setTests((prev) => prev.filter((t) => t.id !== confirmDelete.id));
+      if (editing?.id === confirmDelete.id) { setEditing(null); setCreating(false); }
       toast.success("Skill test deleted");
     } catch { toast.error("Failed to delete"); }
+    finally { setConfirmDelete(null); }
   };
 
   const handleToggle = async (id: number, isActive: boolean) => {
@@ -318,7 +325,17 @@ export default function AdminSkillTestsPage() {
             </tbody>
           </table>
         </div>
+        </div>
       )}
+
+      <ConfirmDialog
+        open={confirmDelete !== null}
+        title="Delete Skill Test"
+        description={`Delete "${confirmDelete?.title}"? All questions and student attempts will be removed.`}
+        confirmLabel="Delete"
+        onConfirm={confirmDeleteAction}
+        onCancel={() => setConfirmDelete(null)}
+      />
     </div>
   );
 }

@@ -17,6 +17,7 @@ import api from "../../../lib/axios";
 import type { Job } from "../../../lib/types";
 import { SEO } from "../../../components/SEO";
 import { Button } from "../../../components/ui/button";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import toast from "@/components/ui/toast";
 
 type StatusFilter = "ALL" | "DRAFT" | "PUBLISHED" | "CLOSED" | "ARCHIVED";
@@ -34,6 +35,7 @@ export default function RecruiterJobsList() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<StatusFilter>("ALL");
   const [search, setSearch] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
 
   useEffect(() => {
     api
@@ -45,14 +47,20 @@ export default function RecruiterJobsList() {
       .catch(() => setLoading(false));
   }, []);
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Delete this job? This cannot be undone.")) return;
+  const handleDelete = (id: number) => {
+    setConfirmDelete(id);
+  };
+
+  const confirmDeleteAction = async () => {
+    if (confirmDelete === null) return;
     try {
-      await api.delete(`/jobs/${id}`);
-      setJobs((prev) => prev.filter((j) => j.id !== id));
+      await api.delete(`/jobs/${confirmDelete}`);
+      setJobs((prev) => prev.filter((j) => j.id !== confirmDelete));
       toast.success("Job deleted");
     } catch {
       toast.error("Failed to delete job");
+    } finally {
+      setConfirmDelete(null);
     }
   };
 
@@ -355,7 +363,17 @@ export default function RecruiterJobsList() {
             ))}
           </ul>
         )}
+        )}
       </div>
+
+      <ConfirmDialog
+        open={confirmDelete !== null}
+        title="Delete Job"
+        description="Delete this job? This cannot be undone."
+        confirmLabel="Delete"
+        onConfirm={confirmDeleteAction}
+        onCancel={() => setConfirmDelete(null)}
+      />
     </div>
   );
 }
